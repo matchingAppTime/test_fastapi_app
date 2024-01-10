@@ -1,6 +1,5 @@
-import json
-
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 import uvicorn
 
 app = FastAPI()
@@ -10,7 +9,8 @@ app = FastAPI()
 async def root():
     response = {}
     response["pet"] = ["dog", "cat"]
-    return response
+    response_json = JSONResponse(content=response)
+    return response_json
 
 
 if __name__ == '__main__':
