@@ -1,12 +1,14 @@
 from pydantic import BaseModel
-from typing import Union
+
 
 class ItemBase(BaseModel):
     title: str
-    description: Union[str, None] = None
+    description: str | None = None
 
-class ItemCreate(BaseModel):
+
+class ItemCreate(ItemBase):
     pass
+
 
 class Item(ItemBase):
     id: int
@@ -15,15 +17,18 @@ class Item(ItemBase):
     class Config:
         orm_mode = True
 
+
 class UserBase(BaseModel):
     email: str
+
 
 class UserCreate(UserBase):
     password: str
 
+
 class User(UserBase):
     id: int
-    is_activate: bool
+    is_active: bool
     items: list[Item] = []
 
     class Config:
