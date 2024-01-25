@@ -1,20 +1,19 @@
 from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
-_app = FastAPI()
-@_app.get("/health", include_in_schema=True)
-async def health():
-    print("Called")
-    return "ok"
+app = FastAPI()
 
+@app.get('/test1')
+async def test1():
+  return {"message": "test"}
 
-app = CORSMiddleware(
-    app=_app,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+@app.post('/test2')
+async def test():
+  return {'message': "test2"}
 
-handler = Mangum(app, lifespan="off")
+@app.post('/test3')
+async def test1(message: str):
+  return {'message': message}
+
+# export port 8080
+handler = Mangum(app)
